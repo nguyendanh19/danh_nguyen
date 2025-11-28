@@ -1,0 +1,6 @@
+EMAIL,PASSWORD,EXPECTED_RESULT
+dn1@yopmail.com,1234567890,success
+wrongpass@yopmail.com,sai123,error
+nouser@yopmail.com,1234567890,error
+,1234567890,error
+dn2@yopmail.com,,error

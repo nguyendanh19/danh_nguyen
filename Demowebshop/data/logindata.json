@@ -1,0 +1,27 @@
+[
+  {
+    "EMAIL": "dn1@yopmail.com",
+    "PASSWORD": "1234567890",
+    "EXPECTED_RESULT": "success"
+  },
+  {
+    "EMAIL": "wrongpass@yopmail.com",
+    "PASSWORD": "sai123",
+    "EXPECTED_RESULT": "error"
+  },
+  {
+    "EMAIL": "nouser@yopmail.com",
+    "PASSWORD": "1234567890",
+    "EXPECTED_RESULT": "error"
+  },
+  {
+    "EMAIL": "",
+    "PASSWORD": "1234567890",
+    "EXPECTED_RESULT": "error"
+  },
+  {
+    "EMAIL": "dn2@yopmail.com",
+    "PASSWORD": "",
+    "EXPECTED_RESULT": "error"
+  }
+]

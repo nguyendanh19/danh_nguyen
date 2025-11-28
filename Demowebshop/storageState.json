@@ -1,0 +1,95 @@
+{
+  "cookies": [
+    {
+      "name": "ARRAffinity",
+      "value": "fcce2e08647ccec92b72a952327a9e7bf4524be0e93b1c7241edd776574e2eb8",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ARRAffinitySameSite",
+      "value": "fcce2e08647ccec92b72a952327a9e7bf4524be0e93b1c7241edd776574e2eb8",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__utma",
+      "value": "78382081.1997845392.1761646179.1761646179.1761646179.1",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": 1796206180.454218,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmc",
+      "value": "78382081",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmz",
+      "value": "78382081.1761646179.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": 1777414180,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmt",
+      "value": "1",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": 1761646779,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NOPCOMMERCE.AUTH",
+      "value": "457B1F54D19DBC9DF5C03BEAC81A64872D04922B5EF6961C3E880CF922F144AB55554AC3727FD4017753A189DC8177E4D2377A96C9EF658D23678B0CC2F11910D9225ADF6A7E37F929E06091820D22E1E4522B77605F172079E1C28D2962E4162CE438D22D8E3957DCA862E848C93A8FF47B18D926751E3683349363599872218E452371DF94A3B7C2D4CB41B462A5429C1A2EB4E7AD058215405693F64F73A3",
+      "domain": "demowebshop.tricentis.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "Nop.customer",
+      "value": "26b9d094-e538-4560-9bc8-da67e619d3e7",
+      "domain": "demowebshop.tricentis.com",
+      "path": "/",
+      "expires": 1793182180.144458,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__utmb",
+      "value": "78382081.2.10.1761646179",
+      "domain": ".demowebshop.tricentis.com",
+      "path": "/",
+      "expires": 1761647980,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

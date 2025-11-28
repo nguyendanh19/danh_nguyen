@@ -1,0 +1,14 @@
+{
+    "cucumberautocomplete.steps": [
+        "./features/step-definitions/*.js"
+    ],
+    "cucumberautocomplete.syncfeatures": "./features/*.feature",
+    "cucumberautocomplete.strictGherkinCompletion": true,
+    "cucumberautocomplete.smartSnippets": true,
+    "cucumberautocomplete.skipDocStringsFormat": true,
+    "cucumberautocomplete.formatConfOverride": {
+        "Given": "Given ",
+        "When": "When ",
+        "Then": "Then "
+    }
+}
