@@ -43,6 +43,13 @@ class CatalogPage extends BasePage {
         await expect(this.notification).toContainText('added to your shopping cart');
     }
 
+    /** Search for a product by exact name, open it, and add it to the cart. */
+    async addProductByName(name) {
+        await this.search(name);
+        await this.openProduct(name);
+        await this.addToCart();
+    }
+
     async expectProductPage(name, price) {
         await expect(this.page.locator('.product-name h1')).toHaveText(name);
         await expect(this.page.locator('.product-price span').first()).toHaveText(price);

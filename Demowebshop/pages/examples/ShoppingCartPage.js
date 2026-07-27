@@ -1,7 +1,6 @@
 // pages/examples/ShoppingCartPage.js
 const { expect } = require('@playwright/test');
 const { BasePage } = require('./BasePage');
-const { expectTotalsWithin } = require('./components');
 
 class ShoppingCartPage extends BasePage {
     constructor(page) {
@@ -26,9 +25,9 @@ class ShoppingCartPage extends BasePage {
         await this.update();
     }
 
-    async removeProduct(productName) {
+    /** Tick a product's remove checkbox; call update() afterwards to apply. */
+    async selectRemove(productName) {
         await this.row(productName).locator('input[name="removefromcart"]').check();
-        await this.update();
     }
 
     row(productName) {
@@ -50,8 +49,22 @@ class ShoppingCartPage extends BasePage {
         if (total) await expect(row.locator('.product-subtotal')).toContainText(total);
     }
 
+    /** Totals table: match a row by its exact left-cell label, assert the right cell. */
     async expectTotals(totals) {
-        await expectTotalsWithin(this.totals, totals);
+        const rows = this.totals.locator('tr');
+        const count = await rows.count();
+        for (const [label, value] of Object.entries(totals)) {
+            let matched = false;
+            for (let i = 0; i < count; i++) {
+                const left = (await rows.nth(i).locator('.cart-total-left').innerText()).trim().replace(/:$/, '');
+                if (left === label) {
+                    await expect(rows.nth(i).locator('.cart-total-right')).toContainText(value);
+                    matched = true;
+                    break;
+                }
+            }
+            if (!matched) throw new Error(`Totals row "${label}" not found`);
+        }
     }
 
     async acceptTerms() {
