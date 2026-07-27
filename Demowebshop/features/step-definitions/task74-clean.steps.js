@@ -8,10 +8,10 @@
 // shared between the order-details page and the confirm-order step.
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
-const AccountOrdersPage = require('../../../pages/examples/AccountOrdersPage');
-const OrderDetailsPage = require('../../../pages/examples/OrderDetailsPage');
-const ShoppingCartPage = require('../../../pages/examples/ShoppingCartPage');
-const CheckoutPage = require('../../../pages/examples/CheckoutPage');
+const AccountOrdersPage = require('../../pages/AccountOrdersPage');
+const OrderDetailsPage = require('../../pages/OrderDetailsPage');
+const ShoppingCartPage = require('../../pages/ShoppingCartPage');
+const CheckoutPage = require('../../pages/CheckoutPage');
 
 Given('I am signed in on the DemoWebShop store', async function () {
     await expect(this.page.getByRole('heading', { name: 'Welcome to our store' })).toBeVisible();

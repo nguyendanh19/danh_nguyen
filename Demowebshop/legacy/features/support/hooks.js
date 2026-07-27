@@ -1,55 +1,94 @@
 // features/support/hooks.js
-// Browser/context lifecycle for the clean BDD suite. Selects auth by tag:
-//   @loggedIn -> reuse storageState.json (created on first run from .env creds)
-//   @guest    -> a fresh, unauthenticated context
 require('dotenv').config();
 const { Before, After, setDefaultTimeout } = require('@cucumber/cucumber');
-const { chromium, firefox, webkit } = require('playwright');
+const { chromium, firefox, webkit, request } = require('playwright');
 const fs = require('fs');
+const Actions = require('../../pages/Actions');
 
 setDefaultTimeout(60 * 1000);
 
 Before(async function ({ pickle }) {
+    // ========== CONFIG ==========
     const browserType = process.env.BROWSER || 'chromium'; // 'firefox' | 'webkit'
-    const headed = process.env.HEADED === 'true';
+    const headed = process.env.HEADED === 'true'; // true = headed, false = headless
     const browsers = { chromium, firefox, webkit };
 
+    console.log(`Launching ${browserType} | Headed: ${headed}`);
+
+    // ========== LAUNCH BROWSER ==========
     const browser = await browsers[browserType].launch({
         headless: !headed,
         args: ['--start-maximized'],
     });
     this.browser = browser;
 
+    // ========== TAG LOGIC ==========
+    console.log('Scenario tags:', pickle.tags.map(t => t.name));
     const hasLoggedInTag = pickle.tags.some(tag => tag.name === '@loggedIn');
     const hasGuestTag = pickle.tags.some(tag => tag.name === '@guest');
 
     let context;
+
+    // ========== LOGGED-IN MODE ==========
     if (hasLoggedInTag) {
         if (!fs.existsSync('storageState.json')) {
+            console.log('No storageState.json found — logging in to create it...');
             const tempContext = await browser.newContext({ ignoreHTTPSErrors: true });
             const tempPage = await tempContext.newPage();
+
             await tempPage.goto('https://demowebshop.tricentis.com/login', { waitUntil: 'domcontentloaded' });
             await tempPage.fill('#Email', process.env.DEMO_EMAIL || 'dn1@yopmail.com');
             await tempPage.fill('#Password', process.env.DEMO_PASSWORD || '1234567890');
             await tempPage.click('input[value="Log in"]');
             await tempPage.waitForTimeout(3000);
+
             await tempContext.storageState({ path: 'storageState.json' });
             await tempContext.close();
+            console.log('Created new storageState.json file.');
         }
-        context = await browser.newContext({ storageState: 'storageState.json', viewport: null });
-    } else if (hasGuestTag) {
-        context = await browser.newContext({ storageState: undefined, viewport: null });
-    } else {
+
+        context = await browser.newContext({
+            storageState: 'storageState.json',
+            viewport: null,
+        });
+    }
+
+    // ========== GUEST MODE ==========
+    else if (hasGuestTag) {
+        context = await browser.newContext({
+            storageState: undefined,
+            viewport: null,
+        });
+    }
+
+    // ========== DEFAULT MODE ==========
+    else {
         context = await browser.newContext({ viewport: null });
     }
 
     const page = await context.newPage();
     this.page = page;
+    this.action = new Actions(page);
     this.context = context;
 
+    console.log(hasLoggedInTag ? 'Opening DemoWebShop (logged in)' : 'Opening DemoWebShop (guest)');
     await page.goto('https://demowebshop.tricentis.com/');
-    const screenSize = await page.evaluate(() => ({ width: window.screen.width, height: window.screen.height }));
+
+    // ========== FULL VIEWPORT ==========
+    const screenSize = await page.evaluate(() => ({
+        width: window.screen.width,
+        height: window.screen.height,
+    }));
     await page.setViewportSize(screenSize);
+
+    // ========== API CONTEXT (optional) ==========
+    this.apiContext = await request.newContext({
+        baseURL: 'https://automationexercise.com/login',
+        extraHTTPHeaders: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.AUTOMATION_API_TOKEN || ''}`,
+        },
+    });
 });
 
 After(async function () {

@@ -27,30 +27,26 @@ layer for behaviour-driven scenarios.
 
 ```
 .
-├── features/                 # Cucumber BDD
-│   ├── *.feature             # Gherkin scenarios
-│   ├── step-definitions/     # Step implementations
-│   └── support/hooks.js      # Before/After hooks, browser + context setup
-├── pages/                    # Page Object Model
-│   ├── Actions.js            # Shared actions & locators (login, cart, checkout, account)
-│   ├── LoginPage.js          # Login page object
-│   ├── common.js             # Helpers
-│   └── userapi.js            # API helpers
-├── tests/                    # Playwright spec files
-│   ├── login.spec.js         # UI login scenarios
-│   ├── register.spec.js      # Registration
-│   ├── dashboard.spec.js     # Product / cart / checkout flow
-│   ├── loginjson.spec.js     # Data-driven (JSON)
-│   ├── logincsv.spec.js      # Data-driven (CSV)
-│   ├── loginapi.spec.js      # API-level login
-│   ├── api/                  # API specs
-│   └── global-setup.js       # One-time auth → storageState.json
-├── data/                     # Test data (JSON / CSV)
-├── utils/                    # csvHelper, etc.
-├── playwright.config.js      # Projects: API / guest / loggedIn / chromium / firefox
-├── cucumber.js               # Cucumber config
-└── .env.example              # Template for local secrets
+├── features/                 # Clean BDD suite (the maintained cases)
+│   ├── *.feature             # login / register / task52 / task72 / task73 / task74
+│   ├── step-definitions/     # thin steps, one file per feature
+│   └── support/hooks.js      # browser/context lifecycle, @loggedIn / @guest
+├── pages/                    # Page Object Model (one focused class per screen)
+│   ├── BasePage.js           # shared navigation + assertions
+│   ├── LoginPage.js  RegisterPage.js  AccountPage.js  AccountOrdersPage.js
+│   ├── CatalogPage.js  ShoppingCartPage.js  CheckoutPage.js  OrderDetailsPage.js
+│   └── components.js         # reusable address / product / totals assertions
+├── legacy/                   # ORIGINAL hand-written cases, kept for comparison
+│   ├── features/ pages/ tests/ ...  (uses the old Actions god-object)
+│   └── README.md             # old → new mapping + how to run
+├── cucumber.js               # Cucumber config (active suite)
+├── .env.example              # Template for local secrets
+└── data/ utils/ ...          # (moved under legacy/ — used by the legacy specs)
 ```
+
+> The clean suite is self-contained and runs green headless. The `legacy/`
+> folder holds the pre-refactor originals for side-by-side study — see
+> [legacy/README.md](legacy/README.md).
 
 ---
 
@@ -72,14 +68,16 @@ cp .env.example .env
 
 | Command | What it runs |
 |---|---|
-| `npm test` | All Playwright specs |
-| `npm run test:headed` | With a visible browser |
-| `npm run test:ui` | Playwright UI mode |
-| `npm run test:chromium` | Chromium project only |
-| `npm run test:api` | API project only |
-| `npm run test:login` | Login spec only |
-| `npm run test:bdd` | All Cucumber `.feature` scenarios |
-| `npm run report` | Open the last HTML report |
+| `npm test` | The clean BDD suite (all `.feature` scenarios) |
+| `npm run test:headed` | Same, with a visible browser |
+| `npm run test:login` | Login scenarios only (`@login-clean`) |
+| `npm run test:legacy` | The original cases under `legacy/` (Cucumber) |
+| `npm run test:legacy:pw` | The original Playwright specs under `legacy/` |
+
+Run a single feature by tag, e.g.:
+```bash
+npx cucumber-js --tags @task74-dynamic
+```
 
 ---
 

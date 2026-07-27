@@ -1,8 +1,8 @@
 // features/step-definitions/examples/task72-clean.steps.js
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
-const CatalogPage = require('../../../pages/examples/CatalogPage');
-const ShoppingCartPage = require('../../../pages/examples/ShoppingCartPage');
+const CatalogPage = require('../../pages/CatalogPage');
+const ShoppingCartPage = require('../../pages/ShoppingCartPage');
 
 Given('my cart is empty', async function () {
     await new ShoppingCartPage(this.page).clearCart();

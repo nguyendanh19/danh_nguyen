@@ -1,7 +1,7 @@
 // features/step-definitions/examples/register-clean.steps.js
 // Reuses guest/register/login-out steps from task52-clean & task74-clean.
 const { When, Then } = require('@cucumber/cucumber');
-const RegisterPage = require('../../../pages/examples/RegisterPage');
+const RegisterPage = require('../../pages/RegisterPage');
 
 When('I try to register again with the same email', async function () {
     this.register = new RegisterPage(this.page);

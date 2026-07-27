@@ -2,9 +2,9 @@
 // Reuses "I log out" (task74-clean), "I should land on" (common-clean).
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
-const RegisterPage = require('../../../pages/examples/RegisterPage');
-const AccountPage = require('../../../pages/examples/AccountPage');
-const LoginPage = require('../../../pages/examples/LoginPage');
+const RegisterPage = require('../../pages/RegisterPage');
+const AccountPage = require('../../pages/AccountPage');
+const LoginPage = require('../../pages/LoginPage');
 
 Given('I am on the DemoWebShop store as a guest', async function () {
     await expect(this.page.getByRole('link', { name: 'Register' })).toBeVisible();

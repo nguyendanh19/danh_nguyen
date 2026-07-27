@@ -3,7 +3,7 @@
 // Reference template — thin steps that delegate to the LoginPage object.
 // Each step is one line: no locators, no waits, no assertions inline.
 const { Given, When, Then } = require('@cucumber/cucumber');
-const LoginPage = require('../../../pages/examples/LoginPage');
+const LoginPage = require('../../pages/LoginPage');
 
 Given('I am on the DemoWebShop sign-in page', async function () {
     this.loginPage = new LoginPage(this.page);

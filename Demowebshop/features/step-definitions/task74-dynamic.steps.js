@@ -4,11 +4,11 @@
 //   "Given I am signed in on the DemoWebShop store" and "When I re-order this order".
 const { When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
-const CatalogPage = require('../../../pages/examples/CatalogPage');
-const ShoppingCartPage = require('../../../pages/examples/ShoppingCartPage');
-const CheckoutPage = require('../../../pages/examples/CheckoutPage');
-const AccountOrdersPage = require('../../../pages/examples/AccountOrdersPage');
-const OrderDetailsPage = require('../../../pages/examples/OrderDetailsPage');
+const CatalogPage = require('../../pages/CatalogPage');
+const ShoppingCartPage = require('../../pages/ShoppingCartPage');
+const CheckoutPage = require('../../pages/CheckoutPage');
+const AccountOrdersPage = require('../../pages/AccountOrdersPage');
+const OrderDetailsPage = require('../../pages/OrderDetailsPage');
 
 const NEW_ADDRESS = {
     firstName: 'Auto', lastName: 'Tester', email: 'cuibap1@yopmail.com',
