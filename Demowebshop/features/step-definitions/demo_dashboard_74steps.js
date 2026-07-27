@@ -3,8 +3,6 @@ const { Given, When, Then, Before, After } = require('@cucumber/cucumber');
 const Actions = require('../../pages/Actions');
 const { chromium } = require('playwright');
 const { expect } = require('@playwright/test');
-const { title } = require('process');
-const { name } = require('../../playwright.config');
 
 let browser, context, page;
 
@@ -26,12 +24,12 @@ Then('I should see the Order overview area with information: Order {string}, Ord
 
 // Verify that the information in the Order details
 Then('I should see the information in the {string} section on the Order details area will contain: Order Number title {string}, Name {string}, Email {string}, Phone {string}, Fax {string}, Company {string}, Address 1 {string}, Address 2 {string}, City state zip {string}, Country {string}, Payment/Shipping title {string}, Payment/Shipping Method {string}', async function(section, oi_order_detail_title, name, email, phone, fax, company, address1, address2, city_state_zip, country, payment_shippingTitle, payment_shippingMethod) {
-    await this.action.txtMyaccount_orderinfo_orderdetail(section, oi_order_detail_title, name, email, phone, fax, company, address1, address2, city_state_zip, country, payment_shippingTitle, payment_shippingMethod);
+    await this.action.verify_order_details_information(section, oi_order_detail_title, name, email, phone, fax, company, address1, address2, city_state_zip, country, payment_shippingTitle, payment_shippingMethod);
 });
 
 // Verify the information in the Product(s) table
 Then('I should see the information in the {string} section on the Product table will contain: Name {string}, Price {string}, Quantity {string}, Total {string}', async function(section, productName, price, quantity, total) {
-    await this.action.txtMyaccount_orderinfo_product(section, productName, price, quantity, total);
+    await this.action.verify_order_product_information(productName, price, quantity, total);
 });
 
 //Verify that the information on the Total info in the Order information
