@@ -62,14 +62,13 @@ class CatalogPage extends BasePage {
     }
 
     async openMiniCart() {
-        // The flyout opens on hover; keep the pointer on the cart link and give the
-        // flyout time to appear (a single hover can miss under load).
-        const cartLink = this.page.locator('#topcartlink');
-        await cartLink.hover();
-        if (!(await this.miniCart.isVisible().catch(() => false))) {
-            await cartLink.hover();
-        }
-        await expect(this.miniCart).toBeVisible({ timeout: 15000 });
+        // Trigger the flyout with a dispatched mouseover: reliable in headless and
+        // not blocked by the "added to cart" notification bar that can overlay the
+        // header right after adding a product (a plain hover gets intercepted).
+        // Assert the flyout opened via its 'active' class rather than geometry,
+        // which is unstable under the headless viewport.
+        await this.page.locator('#topcartlink').dispatchEvent('mouseover');
+        await expect(this.page.locator('#flyout-cart')).toHaveClass(/active/, { timeout: 10000 });
     }
 
     async expectMiniCart({ count, subTotal, items = [] }) {
