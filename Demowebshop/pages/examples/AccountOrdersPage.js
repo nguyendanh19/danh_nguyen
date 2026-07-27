@@ -33,6 +33,14 @@ class AccountOrdersPage extends BasePage {
     async openDetails(orderNumber) {
         await this.orderCard(orderNumber).getByRole('button', { name: 'Details' }).click();
     }
+
+    async openMostRecentDetails() {
+        await this.page.locator('.order-item').first().getByRole('button', { name: 'Details' }).click();
+    }
+
+    async expectOrderPresent(orderNumber) {
+        await expect(this.orderCard(orderNumber)).toBeVisible();
+    }
 }
 
 module.exports = AccountOrdersPage;

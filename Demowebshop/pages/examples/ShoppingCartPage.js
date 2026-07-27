@@ -12,6 +12,10 @@ class ShoppingCartPage extends BasePage {
         this.totals = page.locator('.cart-total');
     }
 
+    async open() {
+        await this.goto('/cart');
+    }
+
     row(productName) {
         return this.page.locator('tr.cart-item-row', { hasText: productName });
     }

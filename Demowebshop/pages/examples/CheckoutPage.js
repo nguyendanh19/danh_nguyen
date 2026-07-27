@@ -72,6 +72,44 @@ class CheckoutPage extends BasePage {
             .getByRole('button', { name: 'Confirm' }).click();
     }
 
+    /** Fill the "new billing address" form (only shown when no address is saved). */
+    async fillBillingAddress(a) {
+        const set = async (id, value) => {
+            const el = this.page.locator(`#${id}`);
+            if (value && await el.count()) await el.fill(value);
+        };
+        await set('BillingNewAddress_FirstName', a.firstName);
+        await set('BillingNewAddress_LastName', a.lastName);
+        await set('BillingNewAddress_Email', a.email);
+        await set('BillingNewAddress_City', a.city);
+        await set('BillingNewAddress_Address1', a.address1);
+        await set('BillingNewAddress_ZipPostalCode', a.zip);
+        await set('BillingNewAddress_PhoneNumber', a.phone);
+        await this.page.locator('#BillingNewAddress_CountryId').selectOption({ label: a.country });
+        const state = this.page.locator('#BillingNewAddress_StateProvinceId');
+        if (a.state && await state.count()) await state.selectOption({ label: a.state });
+    }
+
+    /** Walk all checkout steps and place the order; returns the generated number. */
+    async checkoutAndPlaceOrder(address) {
+        // Wait for the billing step to render, then decide: use a saved address if
+        // one is offered, otherwise fill the new-address form.
+        const newAddressCountry = this.page.locator('#BillingNewAddress_CountryId');
+        await this.billingSelect.or(newAddressCountry).first().waitFor({ state: 'attached' });
+        if (!(await this.billingSelect.isVisible())) {
+            await this.fillBillingAddress(address);
+        }
+        await this.continuePast('billing address');
+        await this.continuePast('shipping address');            // ship to same address
+        await this.methodList.locator('input[type=radio]:visible').first().check();
+        await this.continuePast('shipping method');
+        await this.choosePaymentMethod('Cash On Delivery');
+        await this.continuePast('payment method');
+        await this.continuePast('payment information');
+        await this.placeOrder();
+        return this.readOrderNumber();
+    }
+
     // --- Order completed screen ---
     async expectConfirmation(message) {
         await expect(this.page.getByRole('heading', { name: 'Thank you' })).toBeVisible();
