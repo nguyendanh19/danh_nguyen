@@ -1,4 +1,4 @@
-// pages/examples/RegisterPage.js
+// pages/RegisterPage.js
 const { expect } = require('@playwright/test');
 const { BasePage } = require('./BasePage');
 

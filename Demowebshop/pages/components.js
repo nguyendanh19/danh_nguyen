@@ -1,4 +1,4 @@
-// pages/examples/components.js
+// pages/components.js
 //
 // Small reusable assertions shared by the order-details and confirm-order screens
 // (both render the same key-value blocks, product rows and totals tables).

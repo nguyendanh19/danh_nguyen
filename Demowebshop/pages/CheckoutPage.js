@@ -1,4 +1,4 @@
-// pages/examples/CheckoutPage.js
+// pages/CheckoutPage.js
 // One-page checkout: the 5 steps, the confirm-order review, placing the order,
 // and the "order completed" screen. The confirm review reuses the same
 // expectAddress / expectProduct / expectTotals API as OrderDetailsPage.

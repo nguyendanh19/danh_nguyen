@@ -1,4 +1,4 @@
-// features/step-definitions/examples/task74-dynamic.steps.js
+// features/step-definitions/task74-dynamic.steps.js
 //
 // Steps for the self-contained re-order flow. Reuses from task74-clean.steps.js:
 //   "Given I am signed in on the DemoWebShop store" and "When I re-order this order".

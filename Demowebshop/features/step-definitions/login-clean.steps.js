@@ -1,4 +1,4 @@
-// features/step-definitions/examples/login-clean.steps.js
+// features/step-definitions/login-clean.steps.js
 //
 // Reference template — thin steps that delegate to the LoginPage object.
 // Each step is one line: no locators, no waits, no assertions inline.

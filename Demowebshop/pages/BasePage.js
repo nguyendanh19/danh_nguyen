@@ -1,4 +1,4 @@
-// pages/examples/BasePage.js
+// pages/BasePage.js
 //
 // Reference template — a small base class every Page Object can extend.
 // Keeps shared plumbing (navigation, header, title checks) in one place so

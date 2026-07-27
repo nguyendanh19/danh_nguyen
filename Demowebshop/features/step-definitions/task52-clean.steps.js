@@ -1,4 +1,4 @@
-// features/step-definitions/examples/task52-clean.steps.js
+// features/step-definitions/task52-clean.steps.js
 // Reuses "I log out" (task74-clean), "I should land on" (common-clean).
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');

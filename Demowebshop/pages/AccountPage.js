@@ -1,4 +1,4 @@
-// pages/examples/AccountPage.js
+// pages/AccountPage.js
 // The "My account" area: customer info, addresses and change password.
 const { expect } = require('@playwright/test');
 const { BasePage } = require('./BasePage');

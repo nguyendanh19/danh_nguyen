@@ -1,4 +1,4 @@
-// pages/examples/ShoppingCartPage.js
+// pages/ShoppingCartPage.js
 const { expect } = require('@playwright/test');
 const { BasePage } = require('./BasePage');
 

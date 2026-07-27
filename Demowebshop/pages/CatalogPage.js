@@ -1,4 +1,4 @@
-// pages/examples/CatalogPage.js
+// pages/CatalogPage.js
 // Catalog browsing: categories, search, product pages, add-to-cart, mini cart.
 const { expect } = require('@playwright/test');
 const { BasePage } = require('./BasePage');

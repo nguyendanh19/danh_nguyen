@@ -1,4 +1,4 @@
-// pages/examples/OrderDetailsPage.js
+// pages/OrderDetailsPage.js
 // The "Order information" screen — reused for both a past order and the freshly
 // placed one. Exposes the same expect* API as CheckoutPage's confirm step, so the
 // feature's "address / product / totals" steps work on either screen.

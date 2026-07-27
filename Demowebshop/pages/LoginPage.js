@@ -1,4 +1,4 @@
-// pages/examples/LoginPage.js
+// pages/LoginPage.js
 //
 // Reference template — a focused Page Object for ONE screen (the sign-in page).
 // Compare with pages/Actions.js (the 780-line "god object"):

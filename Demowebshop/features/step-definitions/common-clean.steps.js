@@ -1,4 +1,4 @@
-// features/step-definitions/examples/common-clean.steps.js
+// features/step-definitions/common-clean.steps.js
 //
 // Truly generic navigation/assertion steps for the clean templates. They operate
 // on this.page directly, so they are NOT coupled to any single page object and

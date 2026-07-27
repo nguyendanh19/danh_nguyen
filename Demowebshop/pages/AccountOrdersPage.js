@@ -1,4 +1,4 @@
-// pages/examples/AccountOrdersPage.js
+// pages/AccountOrdersPage.js
 // "My account" navigation + the Orders list.
 const { expect } = require('@playwright/test');
 const { BasePage } = require('./BasePage');

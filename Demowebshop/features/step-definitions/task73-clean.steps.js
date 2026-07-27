@@ -1,4 +1,4 @@
-// features/step-definitions/examples/task73-clean.steps.js
+// features/step-definitions/task73-clean.steps.js
 // Reuses cart/checkout steps from task72-clean, task74-clean and task74-dynamic.
 const { When } = require('@cucumber/cucumber');
 const CatalogPage = require('../../pages/CatalogPage');

@@ -1,4 +1,4 @@
-// features/step-definitions/examples/task74-clean.steps.js
+// features/step-definitions/task74-clean.steps.js
 //
 // Thin steps for the clean Task 74. Reuses "I should land on {string}" and
 // "the page title should be {string}" from login-clean.steps.js.
