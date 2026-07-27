@@ -1,4 +1,5 @@
 // features/support/hooks.js
+require('dotenv').config();
 const { Before, After, setDefaultTimeout } = require('@cucumber/cucumber');
 const { chromium, firefox, webkit, request } = require('playwright');
 const fs = require('fs');
@@ -36,8 +37,8 @@ Before(async function ({ pickle }) {
             const tempPage = await tempContext.newPage();
 
             await tempPage.goto('https://demowebshop.tricentis.com/login', { waitUntil: 'domcontentloaded' });
-            await tempPage.fill('#Email', 'cuibap6@yopmail.com');
-            await tempPage.fill('#Password', '0987654321');
+            await tempPage.fill('#Email', process.env.DEMO_EMAIL || 'dn1@yopmail.com');
+            await tempPage.fill('#Password', process.env.DEMO_PASSWORD || '1234567890');
             await tempPage.click('input[value="Log in"]');
             await tempPage.waitForTimeout(3000);
 
@@ -85,7 +86,7 @@ Before(async function ({ pickle }) {
         baseURL: 'https://automationexercise.com/login',
         extraHTTPHeaders: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer Klee8jW5ZFdCHC4lpSU1hMeFTp7L0DfxJqqvlcP0Io9UET7kvZmUOYiScf5sQXql',
+            'Authorization': `Bearer ${process.env.AUTOMATION_API_TOKEN || ''}`,
         },
     });
 });

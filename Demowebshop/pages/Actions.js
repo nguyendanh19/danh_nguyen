@@ -639,8 +639,7 @@ class Actions {
 
     //Verify the information in the Product(s) table
     async verify_order_product_information(productName, price, quantity, total) {
-        const productRow = this.txtMyaccount_orderinfo_product(productName); 
-        await expect(section.locator('.title strong')).toContainText(productTitle, {timeout: 2000})
+        const productRow = this.txtMyaccount_orderinfo_product(productName);
         await expect(productRow.locator('td.name')).toContainText(productName, { timeout: 2000 });
         await expect(productRow.locator('td.price')).toContainText(price, { timeout: 2000 });
         await expect(productRow.locator('td.quantity')).toContainText(quantity, { timeout: 2000 });

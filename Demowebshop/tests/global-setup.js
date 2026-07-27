@@ -1,15 +1,18 @@
 // tests/global-setup.js
-import { chromium } from '@playwright/test';
+const { chromium } = require('@playwright/test');
 
-async function globalSetup(config) {
+async function globalSetup() {
+    const email = process.env.DEMO_EMAIL || 'dn1@yopmail.com';
+    const password = process.env.DEMO_PASSWORD || '1234567890';
+
     const browser = await chromium.launch();
     const page = await browser.newPage();
 
     // Login
     await page.goto('https://demowebshop.tricentis.com/');
     await page.click('.ico-login');
-    await page.fill('#Email', 'dn1@yopmail.com');
-    await page.fill('#Password', '1234567890');
+    await page.fill('#Email', email);
+    await page.fill('#Password', password);
     await page.click('input[value="Log in"]');
 
     // Save session
@@ -17,4 +20,4 @@ async function globalSetup(config) {
     await browser.close();
 }
 
-export default globalSetup;
+module.exports = globalSetup;

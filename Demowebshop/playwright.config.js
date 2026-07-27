@@ -1,13 +1,11 @@
 const { defineConfig, devices } = require('@playwright/test');
- 
- 
+const path = require('path');
+
 /**
-* Read environment variables from file.
+* Read environment variables from the .env file (see .env.example).
 * https://github.com/motdotla/dotenv
 */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
  
 /**
 * @see https://playwright.dev/docs/test-configuration
@@ -25,7 +23,7 @@ module.exports = defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  globalSetup: './global-setup.js',
+  globalSetup: './tests/global-setup.js',
   use: {
     headless: false,
     //storageState: 'storageState.json', // Use session login state for all tests

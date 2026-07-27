@@ -1,11 +1,27 @@
 {
-  "name": "playwright_js",
+  "name": "demowebshop-playwright",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
+  "description": "UI + API test automation for DemoWebShop (tricentis) using Playwright and Cucumber BDD (JavaScript, Page Object Model).",
+  "author": "danh_nguyen",
   "license": "ISC",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:chromium": "playwright test --project=chromium",
+    "test:api": "playwright test --project=API",
+    "test:login": "playwright test tests/login.spec.js",
+    "test:bdd": "cucumber-js",
+    "report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "cucumber",
+    "bdd",
+    "test-automation",
+    "page-object-model",
+    "javascript"
+  ],
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",
     "@faker-js/faker": "^8.4.1",
@@ -27,11 +43,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/breads8988/Playwright_QC_Phen.git"
-  },
-  "bugs": {
-    "url": "https://github.com/breads8988/Playwright_QC_Phen/issues"
-  },
-  "homepage": "https://github.com/breads8988/Playwright_QC_Phen#readme",
-  "description": ""
+    "url": "git+https://github.com/nguyendanh19/danh_nguyen.git"
+  }
 }
