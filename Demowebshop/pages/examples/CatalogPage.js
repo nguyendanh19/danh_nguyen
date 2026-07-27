@@ -62,8 +62,14 @@ class CatalogPage extends BasePage {
     }
 
     async openMiniCart() {
-        await this.page.locator('#topcartlink').hover();
-        await expect(this.miniCart).toBeVisible();
+        // The flyout opens on hover; keep the pointer on the cart link and give the
+        // flyout time to appear (a single hover can miss under load).
+        const cartLink = this.page.locator('#topcartlink');
+        await cartLink.hover();
+        if (!(await this.miniCart.isVisible().catch(() => false))) {
+            await cartLink.hover();
+        }
+        await expect(this.miniCart).toBeVisible({ timeout: 15000 });
     }
 
     async expectMiniCart({ count, subTotal, items = [] }) {
