@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Cucumber
+.features-gen/
+
+# Secrets & session state (never commit)
+.env
+.env.local
+storageState.json
+auth.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+setting.json
+settings.json
