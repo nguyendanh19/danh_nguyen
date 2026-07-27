@@ -40,6 +40,10 @@ class RegisterPage extends BasePage {
     async continueToStore() {
         await this.continueButton.click();
     }
+
+    async expectError(message) {
+        await expect(this.page.getByText(message)).toBeVisible();
+    }
 }
 
 module.exports = RegisterPage;
