@@ -16,6 +16,21 @@ class ShoppingCartPage extends BasePage {
         await this.goto('/cart');
     }
 
+    /** Empty the cart so a scenario starts from a known state. */
+    async clearCart() {
+        await this.open();
+        const removeBoxes = this.page.locator('.cart-item-row input[name="removefromcart"]');
+        const count = await removeBoxes.count();
+        if (count === 0) return;
+        for (let i = 0; i < count; i++) await removeBoxes.nth(i).check();
+        await this.update();
+    }
+
+    async removeProduct(productName) {
+        await this.row(productName).locator('input[name="removefromcart"]').check();
+        await this.update();
+    }
+
     row(productName) {
         return this.page.locator('tr.cart-item-row', { hasText: productName });
     }
