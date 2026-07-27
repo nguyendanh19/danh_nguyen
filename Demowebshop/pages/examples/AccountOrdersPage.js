@@ -6,7 +6,7 @@ const { BasePage } = require('./BasePage');
 class AccountOrdersPage extends BasePage {
     constructor(page) {
         super(page);
-        this.accountLink = page.locator('.header-links a.account'); // header shows the signed-in email
+        this.accountLink = page.locator('.header-links a[href="/customer/info"]'); // header account (email) link
         this.leftMenu = page.locator('.listbox');
     }
 

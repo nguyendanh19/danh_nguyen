@@ -37,10 +37,5 @@ Then('I should see the field error {string}', async function (message) {
     await this.loginPage.expectFieldError(message);
 });
 
-Then('I should land on {string}', async function (path) {
-    await this.loginPage.expectUrl(path);
-});
-
-Then('the page title should be {string}', async function (title) {
-    await this.loginPage.expectTitle(title);
-});
+// Note: generic "I should land on {string}" and "the page title should be {string}"
+// live in common-clean.steps.js so they are shared by every *-clean feature.
