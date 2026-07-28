@@ -5,9 +5,15 @@
   "author": "danh_nguyen",
   "license": "ISC",
   "scripts": {
-    "test": "cucumber-js",
-    "test:headed": "cross-env HEADED=true cucumber-js",
-    "test:login": "cucumber-js --tags @login-clean",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:guest": "playwright test --project=guest",
+    "test:loggedin": "playwright test --project=loggedIn",
+    "report": "playwright show-report",
+    "test:bdd": "cucumber-js",
+    "test:bdd:headed": "cross-env HEADED=true cucumber-js",
+    "test:bdd:login": "cucumber-js --tags @login-clean",
     "test:legacy": "cucumber-js --config legacy/cucumber.js",
     "test:legacy:pw": "playwright test --config legacy/playwright.config.js"
   },

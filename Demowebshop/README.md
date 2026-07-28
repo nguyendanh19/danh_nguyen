@@ -36,17 +36,36 @@ layer for behaviour-driven scenarios.
 │   ├── LoginPage.js  RegisterPage.js  AccountPage.js  AccountOrdersPage.js
 │   ├── CatalogPage.js  ShoppingCartPage.js  CheckoutPage.js  OrderDetailsPage.js
 │   └── components.js         # reusable address / product / totals assertions
+├── tests/                    # Pure-Playwright spec suite (same page objects)
+│   ├── login / register / account / catalog / cart-checkout / reorder .spec.js
+│   ├── fixtures.js           # custom fixtures injecting the page objects
+│   ├── test-data.js          # shared data + unique-email helper
+│   └── global-setup.js       # one-time sign-in → storageState.json
 ├── legacy/                   # ORIGINAL hand-written cases, kept for comparison
 │   ├── features/ pages/ tests/ ...  (uses the old Actions god-object)
 │   └── README.md             # old → new mapping + how to run
-├── cucumber.js               # Cucumber config (active suite)
-├── .env.example              # Template for local secrets
-└── data/ utils/ ...          # (moved under legacy/ — used by the legacy specs)
+├── playwright.config.js      # Spec suite: projects guest / loggedIn
+├── cucumber.js               # BDD suite config
+└── .env.example              # Template for local secrets
 ```
 
-> The clean suite is self-contained and runs green headless. The `legacy/`
-> folder holds the pre-refactor originals for side-by-side study — see
-> [legacy/README.md](legacy/README.md).
+> **Two runners, one Page Object Model.** The same classes in `pages/` back both
+> the Cucumber BDD scenarios (`features/`) and the pure-Playwright specs
+> (`tests/`) — the BDD layer wires them through step definitions, the spec layer
+> through Playwright fixtures. Both suites are self-contained and run green
+> headless. `legacy/` holds the pre-refactor originals for side-by-side study —
+> see [legacy/README.md](legacy/README.md).
+
+### BDD ↔ spec twins
+
+| Feature (BDD) | Spec (Playwright) |
+|---|---|
+| `login-clean.feature` | `login.spec.js` |
+| `register-clean.feature` | `register.spec.js` |
+| `task52-clean.feature` | `account.spec.js` |
+| `task72-clean.feature` | `catalog.spec.js` |
+| `task73-clean.feature` | `cart-checkout.spec.js` |
+| `task74-dynamic.feature` | `reorder.spec.js` |
 
 ---
 
@@ -66,17 +85,35 @@ cp .env.example .env
 
 ### 3. Run tests
 
+**Playwright specs** (`tests/`)
+
 | Command | What it runs |
 |---|---|
-| `npm test` | The clean BDD suite (all `.feature` scenarios) |
+| `npm test` | All specs (projects `guest` + `loggedIn`) |
 | `npm run test:headed` | Same, with a visible browser |
-| `npm run test:login` | Login scenarios only (`@login-clean`) |
-| `npm run test:legacy` | The original cases under `legacy/` (Cucumber) |
-| `npm run test:legacy:pw` | The original Playwright specs under `legacy/` |
+| `npm run test:ui` | Playwright UI mode |
+| `npm run test:guest` / `npm run test:loggedin` | One project only |
+| `npm run report` | Open the last HTML report |
 
-Run a single feature by tag, e.g.:
+**BDD scenarios** (`features/`)
+
+| Command | What it runs |
+|---|---|
+| `npm run test:bdd` | All `.feature` scenarios |
+| `npm run test:bdd:headed` | Same, with a visible browser |
+| `npm run test:bdd:login` | Login scenarios only (`@login-clean`) |
+
+**Legacy originals**
+
+| Command | What it runs |
+|---|---|
+| `npm run test:legacy` | Original Cucumber cases under `legacy/` |
+| `npm run test:legacy:pw` | Original Playwright specs under `legacy/` |
+
+Run one feature by tag, or one spec file:
 ```bash
 npx cucumber-js --tags @task74-dynamic
+npx playwright test tests/reorder.spec.js
 ```
 
 ---
