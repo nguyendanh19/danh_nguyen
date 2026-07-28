@@ -1,0 +1,15 @@
+Chạy với Guest:
+npx playwright test tests/register.spec.js -g "Register new account successfully" --project=guest
+npx cucumber-js --tags "@Register_successfully"
+ 
+Chạy với login sẵn
+npx playwright test tests/login.spec.js -g "Verify the Forgot password link on the Login page" --project=loggedIn
+npx playwright test tests/dashboard.spec.js -g "Add a product to the cart and verify it on the Shopping Cart page" --project=loggedIn
+ 
+Chạy hết các TCs
+npx playwright test tests/register.spec.js --project=guest
+npx playwright test tests/dashboard.spec.js --project=loggedIn
+
+npx playwright test tests/loginCSV.spec.js --project=chromium
+
+npx playwright test tests/loginAPI.spec.js --project=API

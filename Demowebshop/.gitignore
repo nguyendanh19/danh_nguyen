@@ -22,3 +22,7 @@ auth.json
 .DS_Store
 setting.json
 settings.json
+
+# Personal notes — keep local, not on GitHub
+INTERVIEW_QA.md
+QA_AUTOMATION_INTERVIEW_PREP.md

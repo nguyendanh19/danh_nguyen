@@ -116,6 +116,8 @@ npx cucumber-js --tags @task74-dynamic
 npx playwright test tests/reorder.spec.js
 ```
 
+📖 More commands, tag list and troubleshooting: [RUNNING.md](RUNNING.md)
+
 ---
 
 ## ✅ Coverage
