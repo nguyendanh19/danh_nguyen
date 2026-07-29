@@ -3,12 +3,13 @@
 #   - Background removes the repeated "go to login page" block from every scenario
 #   - steps speak business language — NO CSS classes like "button-1 login-button"
 #   - the last scenario shows a Data Table instead of a long parameter list
-@example @login-clean
+@example @login-clean @regression
 Feature: Sign in (clean template)
 
     Background:
         Given I am on the DemoWebShop sign-in page
 
+    @smoke
     Scenario: Sign in with valid credentials
         When I sign in with email "cuibap1@yopmail.com" and password "1234567890"
         Then I should be signed in as "cuibap1@yopmail.com"

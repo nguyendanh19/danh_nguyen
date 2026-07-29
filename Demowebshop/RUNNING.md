@@ -19,6 +19,52 @@ File `storageState.json` (session đăng nhập) **tự sinh** ở lần chạy 
 
 ---
 
+## ⚠️ Quy tắc data test: mọi thứ auto tạo ra phải có tiền tố `Au_`
+
+Khai báo tại [`support/test-data.js`](support/test-data.js) — dùng chung cho cả spec lẫn BDD.
+
+```js
+const { au, uniqueEmail, TEST_USER } = require('./support/test-data');
+au('Fsoft')      // -> "Au_Fsoft"
+uniqueEmail()    // -> "Au_12345678@yopmail.com"
+```
+
+| Loại | Ví dụ |
+|---|---|
+| Email | `Au_12345678@yopmail.com` |
+| Tên | `Au_Bap` / `Au_Nguyen` |
+| Công ty / thành phố | `Au_Fsoft` / `Au_NhaTrang` |
+
+**Không hardcode tên/email trần** trong spec hay `.feature` — luôn lấy từ `support/test-data.js`.
+Nhờ marker này, script dọn data chỉ cần nhắm vào `Au_*` là không bao giờ đụng data người thật.
+
+### Dọn data sau khi chạy
+```bash
+npm run cleanup          # xem sẽ xoá gì (dry-run, không đụng gì)
+npm run cleanup:apply    # xoá thật (địa chỉ Au_ + giỏ hàng còn sót)
+```
+Script [`scripts/cleanup-test-data.js`](scripts/cleanup-test-data.js) có **chốt chặn production**
+(`TEST_ENV=prod` là dừng) và sẵn khung `cleanupViaDatabase()` để cắm DB thật ở project sau
+(cùng một chiến lược marker: `DELETE ... WHERE email LIKE 'Au_%'`).
+
+---
+
+## Tag phân tầng: `@smoke` vs `@regression`
+
+| Tag | Dùng khi | Số lượng |
+|---|---|---|
+| `@smoke` | Cổng nhanh trước khi merge (~2 phút) | 3 |
+| `@regression` | Chạy đầy đủ, ban đêm / trước release | 12 |
+
+```bash
+npm run test:smoke              # Playwright @smoke
+npm run test:regression         # Playwright @regression
+npm run test:bdd:smoke          # BDD @smoke
+npm run test:bdd:regression     # BDD @regression
+```
+
+---
+
 ## 1. Playwright specs (`tests/`) — có hiện browser
 
 | Mục đích | Lệnh |

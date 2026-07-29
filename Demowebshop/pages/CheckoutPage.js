@@ -86,27 +86,80 @@ class CheckoutPage extends BasePage {
         await set('BillingNewAddress_ZipPostalCode', a.zip);
         await set('BillingNewAddress_PhoneNumber', a.phone);
         await this.page.locator('#BillingNewAddress_CountryId').selectOption({ label: a.country });
-        const state = this.page.locator('#BillingNewAddress_StateProvinceId');
-        if (a.state && await state.count()) await state.selectOption({ label: a.state });
+
+        // Picking a country reloads the state list over AJAX. Wait for the wanted
+        // option to actually exist, otherwise selectOption hangs until it times out.
+        // State is optional on this form, so a missing option must not fail checkout.
+        if (a.state) {
+            const state = this.page.locator('#BillingNewAddress_StateProvinceId');
+            const option = state.locator('option', { hasText: a.state });
+            await option.first().waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
+            if (await option.count()) await state.selectOption({ label: a.state });
+        }
     }
 
-    /** Walk all checkout steps and place the order; returns the generated number. */
+    /** Id of the checkout step currently on screen, e.g. 'billing-buttons-container'. */
+    async currentStepContainer() {
+        return this.page.evaluate(() => {
+            const el = [...document.querySelectorAll('[id$="-buttons-container"]')]
+                .find((e) => e.offsetParent !== null);
+            return el ? el.id : null;
+        });
+    }
+
+    /**
+     * Walk the one-page checkout and place the order; returns the generated number.
+     *
+     * Driven by whichever step is actually visible rather than a fixed sequence:
+     * the shop skips or reorders steps depending on whether the account already
+     * has a saved address, so a hardcoded order breaks on the second checkout.
+     */
     async checkoutAndPlaceOrder(address) {
-        // Wait for the billing step to render, then decide: use a saved address if
-        // one is offered, otherwise fill the new-address form.
-        const newAddressCountry = this.page.locator('#BillingNewAddress_CountryId');
-        await this.billingSelect.or(newAddressCountry).first().waitFor({ state: 'attached' });
-        if (!(await this.billingSelect.isVisible())) {
-            await this.fillBillingAddress(address);
+        let billingFilled = false;
+
+        // The steps render after the checkout page loads — wait for the first one,
+        // otherwise the loop below sees "no step" and exits immediately.
+        await this.page.waitForFunction(
+            () => [...document.querySelectorAll('[id$="-buttons-container"]')]
+                .some((e) => e.offsetParent !== null),
+            null,
+            { timeout: 20000 },
+        );
+
+        for (let guard = 0; guard < 10; guard++) {
+            const container = await this.currentStepContainer();
+            if (!container) break;
+
+            if (container.startsWith('billing')) {
+                // Fill the new-address form once: re-selecting the country would
+                // restart the AJAX state reload and the step would never advance.
+                if (!billingFilled && !(await this.billingSelect.isVisible().catch(() => false))) {
+                    await this.fillBillingAddress(address);
+                }
+                billingFilled = true;
+            } else if (container.startsWith('shipping-method')) {
+                await this.methodList.locator('input[type=radio]:visible').first().check();
+            } else if (container.startsWith('payment-method')) {
+                await this.choosePaymentMethod('Cash On Delivery');
+            } else if (container.startsWith('confirm-order')) {
+                await this.placeOrder();
+                break;
+            }
+
+            await this.page.locator(`#${container}`)
+                .getByRole('button', { name: 'Continue' }).click();
+
+            // Wait until the visible step actually changes before looking again.
+            await this.page.waitForFunction(
+                (previous) => {
+                    const el = [...document.querySelectorAll('[id$="-buttons-container"]')]
+                        .find((e) => e.offsetParent !== null);
+                    return el && el.id !== previous;
+                },
+                container,
+                { timeout: 20000 },
+            ).catch(() => {});
         }
-        await this.continuePast('billing address');
-        await this.continuePast('shipping address');            // ship to same address
-        await this.methodList.locator('input[type=radio]:visible').first().check();
-        await this.continuePast('shipping method');
-        await this.choosePaymentMethod('Cash On Delivery');
-        await this.continuePast('payment method');
-        await this.continuePast('payment information');
-        await this.placeOrder();
         return this.readOrderNumber();
     }
 
@@ -117,6 +170,7 @@ class CheckoutPage extends BasePage {
     }
 
     async readOrderNumber() {
+        await this.page.waitForURL('**/checkout/completed/**', { timeout: 30000 });
         const text = await this.page.locator('.order-completed')
             .getByText(/Order number:/).textContent();
         return text.match(/\d+/)[0];

@@ -1,12 +1,22 @@
 # DemoWebShop — Test Automation (Playwright + Cucumber)
 
-End-to-end **UI and API test automation** for the public demo e-commerce site
-[DemoWebShop by Tricentis](https://demowebshop.tricentis.com), built with
-**Playwright (JavaScript)** using the **Page Object Model**, plus a **Cucumber BDD**
-layer for behaviour-driven scenarios.
+[![Demowebshop Tests](https://github.com/nguyendanh19/danh_nguyen/actions/workflows/demowebshop-tests.yml/badge.svg)](https://github.com/nguyendanh19/danh_nguyen/actions/workflows/demowebshop-tests.yml)
 
-> Practice / portfolio project demonstrating automation design: reusable page
-> objects, data-driven tests (JSON/CSV), BDD, and API testing.
+End-to-end **UI test automation** for the public demo e-commerce site
+[DemoWebShop by Tricentis](https://demowebshop.tricentis.com), built with
+**Playwright (JavaScript)** using the **Page Object Model** — driven by two
+runners: **Playwright specs** and a **Cucumber BDD** layer.
+
+> Practice / portfolio project demonstrating automation design: one Page Object
+> Model behind both runners, self-contained test data, parallel-safe isolation,
+> smoke/regression tiering and CI.
+
+**Highlights**
+- 🧱 One POM, two runners — `pages/` shared by `features/` (BDD) and `tests/` (specs)
+- 🔖 `Au_` data marker on everything automation creates → safe, targeted cleanup
+- ⚡ Parallel-safe — each worker registers its own account, so no shared cart
+- 🚦 `@smoke` (fast gate) vs `@regression` (nightly) tiers
+- 🤖 GitHub Actions: smoke on every push/PR, full regression nightly
 
 ---
 

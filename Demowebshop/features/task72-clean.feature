@@ -1,6 +1,6 @@
 # Reference template — Task 72 (browse + search + add to cart + mini cart), clean.
 # Self-contained: it empties the cart first, so the mini-cart totals are stable.
-@example @task72-clean @loggedIn
+@example @task72-clean @regression @loggedIn
 Feature: Browse, search and add to cart (clean template)
 
     Background:

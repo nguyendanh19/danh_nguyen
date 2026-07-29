@@ -5,11 +5,13 @@ const { expect } = require('@playwright/test');
 const RegisterPage = require('../../pages/RegisterPage');
 const AccountPage = require('../../pages/AccountPage');
 const LoginPage = require('../../pages/LoginPage');
+const { uniqueEmail, TEST_USER } = require('../../support/test-data');
 
 Given('I am on the DemoWebShop store as a guest', async function () {
     await expect(this.page.getByRole('link', { name: 'Register' })).toBeVisible();
-    this.newEmail = `auto${Date.now()}@yopmail.com`;
-    this.password = '1234567890';
+    // Au_-marked email so cleanup can identify everything this run created.
+    this.newEmail = uniqueEmail();
+    this.password = TEST_USER.password;
 });
 
 When('I register a new account named {string} {string}', async function (firstName, lastName) {

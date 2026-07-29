@@ -10,11 +10,7 @@ const CheckoutPage = require('../../pages/CheckoutPage');
 const AccountOrdersPage = require('../../pages/AccountOrdersPage');
 const OrderDetailsPage = require('../../pages/OrderDetailsPage');
 
-const NEW_ADDRESS = {
-    firstName: 'Auto', lastName: 'Tester', email: 'cuibap1@yopmail.com',
-    country: 'United States', state: 'California', city: 'Los Angeles',
-    address1: '123 Main St', zip: '90001', phone: '0123456789',
-};
+const { CHECKOUT_ADDRESS } = require('../../support/test-data');
 
 When('I add the book {string} to the cart', async function (productName) {
     this.catalog = new CatalogPage(this.page);
@@ -27,7 +23,7 @@ When('I check out and place the order', async function () {
     await this.cart.acceptTerms();
     await this.cart.checkout();
     this.checkout = new CheckoutPage(this.page);
-    this.orderNumber = await this.checkout.checkoutAndPlaceOrder(NEW_ADDRESS);
+    this.orderNumber = await this.checkout.checkoutAndPlaceOrder(CHECKOUT_ADDRESS);
 });
 
 Then('an order number is generated', async function () {

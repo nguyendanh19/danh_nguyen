@@ -1,0 +1,97 @@
+name: Demowebshop Tests
+
+on:
+  push:
+    branches: [main]
+    paths: ['Demowebshop/**', '.github/workflows/demowebshop-tests.yml']
+  pull_request:
+    paths: ['Demowebshop/**', '.github/workflows/demowebshop-tests.yml']
+  schedule:
+    - cron: '0 18 * * *' # nightly full regression (01:00 ICT)
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Which suite to run
+        type: choice
+        default: smoke
+        options: [smoke, regression]
+
+defaults:
+  run:
+    working-directory: Demowebshop
+
+env:
+  DEMO_EMAIL: ${{ secrets.DEMO_EMAIL }}
+  DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+
+jobs:
+  # Fast gate on every push / PR: only @smoke.
+  smoke:
+    name: Smoke (Playwright + BDD)
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event.inputs.suite == 'smoke'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Demowebshop/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright specs — @smoke
+        run: npx playwright test --grep @smoke
+
+      - name: BDD scenarios — @smoke
+        run: npx cucumber-js --tags @smoke
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: smoke-report
+          path: Demowebshop/playwright-report/
+          retention-days: 7
+
+  # Nightly (or manual): the whole regression set.
+  regression:
+    name: Regression (Playwright + BDD)
+    if: github.event_name == 'schedule' || github.event.inputs.suite == 'regression'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Demowebshop/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright specs — @regression
+        run: npx playwright test --grep @regression
+
+      # task74-clean is data-bound (fixed historical order): validate wiring only.
+      - name: BDD scenarios — @regression
+        run: npx cucumber-js --tags "@regression and not @task74-clean"
+
+      - name: BDD wiring check (dry-run, all scenarios)
+        if: ${{ !cancelled() }}
+        run: npx cucumber-js --dry-run
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: regression-report
+          path: Demowebshop/playwright-report/
+          retention-days: 14
