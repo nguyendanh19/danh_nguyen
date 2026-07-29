@@ -1,7 +1,7 @@
-// features/step-definitions/task74-clean.steps.js
+// features/step-definitions/order-details.steps.js
 //
 // Thin steps for the clean Task 74. Reuses "I should land on {string}" and
-// "the page title should be {string}" from login-clean.steps.js.
+// "the page title should be {string}" from login.steps.js.
 //
 // `this.screen` points at whichever screen currently renders the order review
 // (OrderDetailsPage or CheckoutPage), so the address/product/totals steps are

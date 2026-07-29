@@ -1,4 +1,4 @@
-// features/step-definitions/task72-clean.steps.js
+// features/step-definitions/catalog.steps.js
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
 const CatalogPage = require('../../pages/CatalogPage');

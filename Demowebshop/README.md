@@ -68,14 +68,21 @@ runners: **Playwright specs** and a **Cucumber BDD** layer.
 
 ### BDD ↔ spec twins
 
-| Feature (BDD) | Spec (Playwright) |
-|---|---|
-| `login-clean.feature` | `login.spec.js` |
-| `register-clean.feature` | `register.spec.js` |
-| `task52-clean.feature` | `account.spec.js` |
-| `task72-clean.feature` | `catalog.spec.js` |
-| `task73-clean.feature` | `cart-checkout.spec.js` |
-| `task74-dynamic.feature` | `reorder.spec.js` |
+Both suites use the same names, so a feature and its spec are easy to pair up:
+
+| Feature (BDD) | Spec (Playwright) | Tag |
+|---|---|---|
+| `login.feature` | `login.spec.js` | `@login` |
+| `register.feature` | `register.spec.js` | `@register` |
+| `account.feature` | `account.spec.js` | `@account` |
+| `catalog.feature` | `catalog.spec.js` | `@catalog` |
+| `cart-checkout.feature` | `cart-checkout.spec.js` | `@cart` |
+| `reorder.feature` | `reorder.spec.js` | `@reorder` |
+| `order-details.feature` | — | `@order-details` `@data-bound` |
+
+Classifier tags: `@smoke` (fast gate), `@regression` (full run), `@data-bound`
+(needs a fixed historical order — wiring is validated by `--dry-run` only),
+`@guest` / `@loggedIn` (auth state handled by the hooks).
 
 ---
 
@@ -110,8 +117,8 @@ cp .env.example .env
 | Command | What it runs |
 |---|---|
 | `npm run test:bdd` | All `.feature` scenarios |
-| `npm run test:bdd:headed` | Same, with a visible browser |
-| `npm run test:bdd:login` | Login scenarios only (`@login-clean`) |
+| `npm run test:bdd:headed` | Same (minus `@data-bound`), with a visible browser |
+| `npm run test:bdd:smoke` / `:regression` | One tier only |
 
 **Legacy originals**
 
@@ -122,7 +129,7 @@ cp .env.example .env
 
 Run one feature by tag, or one spec file:
 ```bash
-npx cucumber-js --tags @task74-dynamic
+npx cucumber-js --tags @reorder
 npx playwright test tests/reorder.spec.js
 ```
 

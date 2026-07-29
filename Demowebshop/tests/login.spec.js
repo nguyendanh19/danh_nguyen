@@ -1,4 +1,4 @@
-// tests/login.spec.js — pure-Playwright twin of features/login-clean.feature
+// tests/login.spec.js — pure-Playwright twin of features/login.feature
 const { test } = require('./fixtures');
 
 const EMAIL = process.env.DEMO_EMAIL || 'cuibap1@yopmail.com';

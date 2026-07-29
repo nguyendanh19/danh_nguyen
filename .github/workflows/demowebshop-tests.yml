@@ -81,9 +81,9 @@ jobs:
       - name: Playwright specs — @regression
         run: npx playwright test --grep @regression
 
-      # task74-clean is data-bound (fixed historical order): validate wiring only.
+      # @data-bound scenarios need a fixed historical order: validate wiring only.
       - name: BDD scenarios — @regression
-        run: npx cucumber-js --tags "@regression and not @task74-clean"
+        run: npx cucumber-js --tags "@regression and not @data-bound"
 
       - name: BDD wiring check (dry-run, all scenarios)
         if: ${{ !cancelled() }}

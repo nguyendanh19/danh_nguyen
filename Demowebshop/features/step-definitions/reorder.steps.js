@@ -1,6 +1,6 @@
-// features/step-definitions/task74-dynamic.steps.js
+// features/step-definitions/reorder.steps.js
 //
-// Steps for the self-contained re-order flow. Reuses from task74-clean.steps.js:
+// Steps for the self-contained re-order flow. Reuses from order-details.steps.js:
 //   "Given I am signed in on the DemoWebShop store" and "When I re-order this order".
 const { When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');

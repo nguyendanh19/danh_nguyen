@@ -1,4 +1,4 @@
-// tests/catalog.spec.js — pure-Playwright twin of features/task72-clean.feature
+// tests/catalog.spec.js — pure-Playwright twin of features/catalog.feature
 // Runs on this worker's own Au_ account (authTest), so the cart is isolated.
 const { authTest: test } = require('./fixtures');
 const { PRODUCTS } = require('../support/test-data');

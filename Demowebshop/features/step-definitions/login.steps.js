@@ -1,4 +1,4 @@
-// features/step-definitions/login-clean.steps.js
+// features/step-definitions/login.steps.js
 //
 // Reference template — thin steps that delegate to the LoginPage object.
 // Each step is one line: no locators, no waits, no assertions inline.
@@ -38,4 +38,4 @@ Then('I should see the field error {string}', async function (message) {
 });
 
 // Note: generic "I should land on {string}" and "the page title should be {string}"
-// live in common-clean.steps.js so they are shared by every *-clean feature.
+// live in common.steps.js so they are shared by every feature.

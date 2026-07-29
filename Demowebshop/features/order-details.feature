@@ -6,7 +6,7 @@
 #
 # NOTE: this scenario is data-bound (account cuibap6 + historical order 2118211),
 # so it is validated by `bddgen`/dry-run here; a green run needs that exact data.
-@example @task74-clean @regression @loggedIn
+@order-details @data-bound @loggedIn
 Feature: Re-order a past order and check out (clean template)
 
     Background:

@@ -95,29 +95,39 @@ Hiện browser bằng biến môi trường `HEADED=true`:
 
 | Mục đích | Lệnh |
 |---|---|
-| Chạy tất cả (hiện browser) | `HEADED=true npx cucumber-js` |
-| 1 feature theo tag | `HEADED=true npx cucumber-js --tags @task74-dynamic` |
-| Nhiều tag | `HEADED=true npx cucumber-js --tags "@login-clean or @register-clean"` |
-| Trừ tag ra | `HEADED=true npx cucumber-js --tags "not @task74-clean"` |
+| Chạy tất cả (hiện browser) | `HEADED=true npx cucumber-js --tags "not @data-bound"` |
+| 1 feature theo tag | `HEADED=true npx cucumber-js --tags @reorder` |
+| Nhiều tag | `HEADED=true npx cucumber-js --tags "@login or @register"` |
+| Trừ tag ra | `HEADED=true npx cucumber-js --tags "not @data-bound"` |
 | Chạy ngầm | `npx cucumber-js` |
 | Kiểm tra step thiếu (không mở browser) | `npx cucumber-js --dry-run` |
 
 Bằng npm script:
 ```bash
-npm run test:bdd:headed   # tất cả, hiện browser
-npm run test:bdd:login    # chỉ @login-clean
+npm run test:bdd:headed   # tất cả (trừ @data-bound), hiện browser
+npm run test:bdd:smoke    # chỉ @smoke
 ```
 
 ### Danh sách tag
+
+**Tag nghiệp vụ** (mỗi feature 1 tag, trùng tên file spec tương ứng)
 | Tag | Nội dung |
 |---|---|
-| `@login-clean` | Đăng nhập (6 case) |
-| `@register-clean` | Đăng ký + email trùng |
-| `@task52-clean` | Đăng ký → sửa profile → thêm địa chỉ → đổi mật khẩu → login lại |
-| `@task72-clean` | Duyệt category + search + mini cart |
-| `@task73-clean` | Sửa giỏ (đổi qty, xoá) + checkout |
-| `@task74-dynamic` | Đặt đơn → bắt order code → re-order |
-| `@task74-clean` | Bản migrate 1-1 (data-bound, chỉ `--dry-run`) |
+| `@login` | Đăng nhập (6 case) |
+| `@register` | Đăng ký + email trùng |
+| `@account` | Đăng ký → sửa profile → thêm địa chỉ → đổi mật khẩu → login lại |
+| `@catalog` | Duyệt category + search + mini cart |
+| `@cart` | Sửa giỏ (đổi qty, xoá) + checkout |
+| `@reorder` | Đặt đơn → bắt order code → re-order |
+| `@order-details` | Bản migrate 1-1 từ case gốc (xem `@data-bound`) |
+
+**Tag phân loại**
+| Tag | Ý nghĩa |
+|---|---|
+| `@smoke` | Cổng nhanh trước merge (3 scenario) |
+| `@regression` | Chạy đầy đủ (12 scenario) |
+| `@data-bound` | Phụ thuộc data cố định (order lịch sử) → chỉ `--dry-run`, luôn loại khỏi lệnh chạy |
+| `@guest` / `@loggedIn` | Chạy ở trạng thái chưa/đã đăng nhập (hooks tự xử lý) |
 
 ---
 
@@ -134,14 +144,17 @@ Lưu ý: nhiều case cũ **data-bound** (account/đơn hàng cố định) nên
 
 ## 4. Bảng đối chiếu BDD ↔ Spec
 
+Tên trùng nhau giữa 2 suite cho dễ tra:
+
 | Feature (BDD) | Spec (Playwright) | Nội dung |
 |---|---|---|
-| `login-clean.feature` | `tests/login.spec.js` | Đăng nhập |
-| `register-clean.feature` | `tests/register.spec.js` | Đăng ký |
-| `task52-clean.feature` | `tests/account.spec.js` | Quản lý tài khoản |
-| `task72-clean.feature` | `tests/catalog.spec.js` | Catalog + mini cart |
-| `task73-clean.feature` | `tests/cart-checkout.spec.js` | Giỏ hàng + checkout |
-| `task74-dynamic.feature` | `tests/reorder.spec.js` | Đặt đơn + re-order |
+| `login.feature` | `tests/login.spec.js` | Đăng nhập |
+| `register.feature` | `tests/register.spec.js` | Đăng ký |
+| `account.feature` | `tests/account.spec.js` | Quản lý tài khoản |
+| `catalog.feature` | `tests/catalog.spec.js` | Catalog + mini cart |
+| `cart-checkout.feature` | `tests/cart-checkout.spec.js` | Giỏ hàng + checkout |
+| `reorder.feature` | `tests/reorder.spec.js` | Đặt đơn + re-order |
+| `order-details.feature` | *(không có)* | Bản migrate 1-1, `@data-bound` |
 
 Cả hai đều dùng chung page object trong `pages/`.
 

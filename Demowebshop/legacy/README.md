@@ -17,12 +17,12 @@ here for reference and side-by-side comparison with the maintained suite in
 ## Old → new mapping
 | Original (here) | Clean rewrite (`../features`) |
 |---|---|
-| demo_login | login-clean |
-| demo_register | register-clean |
-| demo_dashboard_52 | task52-clean |
-| demo_dashboard_72 | task72-clean |
-| demo_dashboard_73 | task73-clean |
-| demo_dashboard_74 | task74-clean (dry-run) + task74-dynamic (self-contained) |
+| demo_login | `login.feature` + `tests/login.spec.js` |
+| demo_register | `register.feature` + `tests/register.spec.js` |
+| demo_dashboard_52 | `account.feature` + `tests/account.spec.js` |
+| demo_dashboard_72 | `catalog.feature` + `tests/catalog.spec.js` |
+| demo_dashboard_73 | `cart-checkout.feature` + `tests/cart-checkout.spec.js` |
+| demo_dashboard_74 | `order-details.feature` (1-1 migrate, `@data-bound`) + `reorder.feature` / `tests/reorder.spec.js` (self-contained) |
 
 ## Running the legacy suite
 From the `Demowebshop/` folder:

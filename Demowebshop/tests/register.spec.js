@@ -1,4 +1,4 @@
-// tests/register.spec.js — pure-Playwright twin of features/register-clean.feature
+// tests/register.spec.js — pure-Playwright twin of features/register.feature
 // All accounts created here carry the Au_ marker (see support/test-data.js).
 const { test, expect } = require('./fixtures');
 const { uniqueEmail, TEST_USER } = require('../support/test-data');

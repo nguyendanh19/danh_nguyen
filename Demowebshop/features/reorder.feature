@@ -2,7 +2,7 @@
 # Instead of depending on a hardcoded historical order (2118211), the test
 # CREATES its own order, captures the auto-generated order number, and verifies
 # THAT number. It is self-contained: it runs green on any signed-in account.
-@example @task74-dynamic @smoke @regression @loggedIn
+@reorder @smoke @regression @loggedIn
 Feature: Re-order with dynamic order numbers (self-contained)
 
     Background:

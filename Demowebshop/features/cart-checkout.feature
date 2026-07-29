@@ -1,5 +1,5 @@
 # Reference template — Task 73 (edit cart + full checkout), clean & self-contained.
-@example @task73-clean @regression @loggedIn
+@cart @regression @loggedIn
 Feature: Edit the cart and check out (clean template)
 
     Background:

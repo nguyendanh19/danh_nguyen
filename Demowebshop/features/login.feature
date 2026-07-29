@@ -3,7 +3,7 @@
 #   - Background removes the repeated "go to login page" block from every scenario
 #   - steps speak business language — NO CSS classes like "button-1 login-button"
 #   - the last scenario shows a Data Table instead of a long parameter list
-@example @login-clean @regression
+@login @regression
 Feature: Sign in (clean template)
 
     Background:

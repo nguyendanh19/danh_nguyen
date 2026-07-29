@@ -1,4 +1,4 @@
-// tests/account.spec.js — pure-Playwright twin of features/task52-clean.feature
+// tests/account.spec.js — pure-Playwright twin of features/account.feature
 // Self-contained: registers its own Au_ account, so it never collides with a
 // fixed one and every record it leaves behind is identifiable for cleanup.
 const { test, expect } = require('./fixtures');

@@ -1,5 +1,5 @@
-// features/step-definitions/register-clean.steps.js
-// Reuses guest/register/login-out steps from task52-clean & task74-clean.
+// features/step-definitions/register.steps.js
+// Reuses guest/register/log-out steps from account.steps & order-details.steps.
 const { When, Then } = require('@cucumber/cucumber');
 const RegisterPage = require('../../pages/RegisterPage');
 

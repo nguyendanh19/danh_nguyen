@@ -1,8 +1,8 @@
-// features/step-definitions/common-clean.steps.js
+// features/step-definitions/common.steps.js
 //
 // Truly generic navigation/assertion steps for the clean templates. They operate
 // on this.page directly, so they are NOT coupled to any single page object and
-// can be shared by every *-clean feature.
+// can be shared by every feature.
 const { Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
 

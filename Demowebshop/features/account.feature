@@ -1,7 +1,7 @@
 # Reference template — Task 52 (account management), clean & self-contained.
 # Registers a UNIQUE Au_-marked account each run (see support/test-data.js), so
 # every record left behind is identifiable for cleanup.
-@example @task52-clean @regression @guest
+@account @regression @guest
 Feature: Account management (clean template)
 
     Scenario: Register, update profile, add an address, change password, then re-login

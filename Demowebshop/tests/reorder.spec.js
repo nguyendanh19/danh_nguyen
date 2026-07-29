@@ -1,4 +1,4 @@
-// tests/reorder.spec.js — pure-Playwright twin of features/task74-dynamic.feature
+// tests/reorder.spec.js — pure-Playwright twin of features/reorder.feature
 // Creates its own order and asserts the AUTO-GENERATED order number, instead of
 // depending on a hardcoded historical order.
 const { authTest: test, expect } = require('./fixtures');

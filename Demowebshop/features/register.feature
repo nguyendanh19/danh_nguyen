@@ -1,7 +1,7 @@
 # Reference template — Task (register), clean & self-contained.
 # Registers a UNIQUE Au_-marked account each run, so the "already exists" case is
 # created by the test itself instead of relying on a pre-existing fixed email.
-@example @register-clean @regression @guest
+@register @regression @guest
 Feature: Register (clean template)
 
     Background:

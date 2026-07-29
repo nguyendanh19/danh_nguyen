@@ -1,4 +1,4 @@
-// tests/cart-checkout.spec.js — pure-Playwright twin of features/task73-clean.feature
+// tests/cart-checkout.spec.js — pure-Playwright twin of features/cart-checkout.feature
 const { authTest: test, expect } = require('./fixtures');
 const { PRODUCTS, CHECKOUT_ADDRESS } = require('../support/test-data');
 
